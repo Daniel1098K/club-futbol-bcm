@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atlético Bucaramanga - Home</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <!-- Navegación -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="d-flex justify-between align-center">
+                <a th:href="@{/}" class="navbar-brand">
+                    <span>⚽</span>
+                    <span>Dimayor</span>
+                </a>
+                <div class="d-flex gap-2">
+                    <a th:href="@{/}" class="nav-link">Inicio</a>
+                    <a th:href="@{/clubes}" class="nav-link">Clubes</a>
+                    <a th:href="@{/jugadores}" class="nav-link">Jugadores</a>
+                    <a th:href="@{/entrenadores}" class="nav-link">Entrenadores</a>
+                    <a th:href="@{/asociaciones}" class="nav-link">Asociaciones</a>
+                    <a th:href="@{/competiciones}" class="nav-link">Competiciones</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <div class="container">
+        <!-- Header -->
+        <div class="page-header fade-in">
+            <h1>⚽ Bienvenido al Sistema de Gestión</h1>
+            <p>Dimayor - Administración Completa de Clubes</p>
+        </div>
+
+        <!-- Estadísticas -->
+        <div class="stats-container fade-in">
+            <div class="stat-card">
+                <h3 th:text="${totalClubes} ?: '0'">0</h3>
+                <p>Clubes Registrados</p>
+            </div>
+            <div class="stat-card">
+                <h3 th:text="${totalJugadores} ?: '0'">0</h3>
+                <p>Jugadores</p>
+            </div>
+            <div class="stat-card">
+                <h3 th:text="${totalEntrenadores} ?: '0'">0</h3>
+                <p>Entrenadores</p>
+            </div>
+            <div class="stat-card">
+                <h3 th:text="${totalCompeticiones} ?: '0'">0</h3>
+                <p>Competiciones</p>
+            </div>
+        </div>
+
+        <!-- Accesos rápidos -->
+        <div class="grid-2 fade-in">
+            <div class="card">
+                <div class="card-header">
+                    <h3>🏆 Gestión de Clubes</h3>
+                </div>
+                <div class="card-body">
+                    <p>Administra la información completa de los clubes, incluyendo sus jugadores, entrenadores y competiciones.</p>
+                </div>
+                <div class="card-footer">
+                    <div class="btn-group">
+                        <a th:href="@{/clubes}" class="btn btn-primary">Ver Clubes</a>
+                        <a th:href="@{/clubes/nuevo}" class="btn btn-success">Nuevo Club</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>👥 Gestión de Jugadores</h3>
+                </div>
+                <div class="card-body">
+                    <p>Registra y gestiona información detallada de todos los jugadores del club.</p>
+                </div>
+                <div class="card-footer">
+                    <div class="btn-group">
+                        <a th:href="@{/jugadores}" class="btn btn-primary">Ver Jugadores</a>
+                        <a th:href="@{/jugadores/nuevo}" class="btn btn-success">Nuevo Jugador</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>🎯 Gestión de Entrenadores</h3>
+                </div>
+                <div class="card-body">
+                    <p>Administra los entrenadores, su experiencia y especialidades técnicas.</p>
+                </div>
+                <div class="card-footer">
+                    <div class="btn-group">
+                        <a th:href="@{/entrenadores}" class="btn btn-primary">Ver Entrenadores</a>
+                        <a th:href="@{/entrenadores/nuevo}" class="btn btn-success">Nuevo Entrenador</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>🏅 Competiciones</h3>
+                </div>
+                <div class="card-body">
+                    <p>Gestiona las competiciones en las que participa el club y sus detalles.</p>
+                </div>
+                <div class="card-footer">
+                    <div class="btn-group">
+                        <a th:href="@{/competiciones}" class="btn btn-primary">Ver Competiciones</a>
+                        <a th:href="@{/competiciones/nuevo}" class="btn btn-success">Nueva Competición</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Información adicional -->
+        <div class="card fade-in mt-4">
+            <div class="card-header">
+                <h3>ℹ️ Información del Sistema</h3>
+            </div>
+            <div class="card-body">
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <label>Relaciones JPA Implementadas</label>
+                        <p>✅ @OneToOne, @OneToMany, @ManyToOne, @ManyToMany</p>
+                    </div>
+                    <div class="detail-item">
+                        <label>Base de Datos</label>
+                        <p>MySQL Online</p>
+                    </div>
+                    <div class="detail-item">
+                        <label>Puerto de Aplicación</label>
+                        <p>8100</p>
+                    </div>
+                    <div class="detail-item">
+                        <label>Framework</label>
+                        <p>Spring Boot 3.2.0 + Thymeleaf</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2025 Dimayor | Desarrollado por Daniel Pérez | Sistema de Gestión Club de Fútbol</p>
+    </footer>
+</body>
+</html>

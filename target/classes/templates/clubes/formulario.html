@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${club.id != null ? 'Editar Club' : 'Nuevo Club'}">Formulario Club</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <!-- Navegación -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="d-flex justify-between align-center">
+                <a th:href="@{/}" class="navbar-brand">
+                    <span>⚽</span>
+                    <span>Dimayor</span>
+                </a>
+                <div class="d-flex gap-2">
+                    <a th:href="@{/}" class="nav-link">Inicio</a>
+                    <a th:href="@{/clubes}" class="nav-link">Clubes</a>
+                    <a th:href="@{/jugadores}" class="nav-link">Jugadores</a>
+                    <a th:href="@{/entrenadores}" class="nav-link">Entrenadores</a>
+                    <a th:href="@{/asociaciones}" class="nav-link">Asociaciones</a>
+                    <a th:href="@{/competiciones}" class="nav-link">Competiciones</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="page-header">
+            <h1 th:text="${club.id != null ? '✏️ Editar Club' : '➕ Nuevo Club'}">Formulario Club</h1>
+            <p>Complete la información del club</p>
+        </div>
+
+        <!-- Formulario -->
+        <div class="card fade-in">
+            <form th:action="@{/clubes/guardar}" th:object="${club}" method="post">
+                <input type="hidden" th:field="*{id}">
+                
+                <div class="grid-2">
+                    <!-- Nombre -->
+                    <div class="form-group">
+                        <label class="form-label" for="nombre">Nombre del Club *</label>
+                        <input type="text" 
+                               class="form-control" 
+                               th:field="*{nombre}" 
+                               id="nombre"
+                               th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid' : ''"
+                               placeholder="Ej: Atlético Bucaramanga"
+                               required>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
+                    </div>
+
+                    <!-- Ciudad -->
+                    <div class="form-group">
+                        <label class="form-label" for="ciudad">Ciudad *</label>
+                        <input type="text" 
+                               class="form-control" 
+                               th:field="*{ciudad}" 
+                               id="ciudad"
+                               th:classappend="${#fields.hasErrors('ciudad')} ? 'is-invalid' : ''"
+                               placeholder="Ej: Bucaramanga"
+                               required>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('ciudad')}" th:errors="*{ciudad}"></div>
+                    </div>
+
+                    <!-- Estadio -->
+                    <div class="form-group">
+                        <label class="form-label" for="estadio">Estadio</label>
+                        <input type="text" 
+                               class="form-control" 
+                               th:field="*{estadio}" 
+                               id="estadio"
+                               placeholder="Ej: Estadio Alfonso López">
+                    </div>
+
+                    <!-- Año Fundación -->
+                    <div class="form-group">
+                        <label class="form-label" for="añoFundacion">Año de Fundación</label>
+                        <input type="number" 
+                               class="form-control" 
+                               th:field="*{añoFundacion}" 
+                               id="añoFundacion"
+                               min="1850"
+                               max="2025"
+                               placeholder="Ej: 1949">
+                    </div>
+
+                    <!-- Color Principal -->
+                    <div class="form-group">
+                        <label class="form-label" for="colorPrincipal">Color Principal</label>
+                        <input type="color" 
+                               class="form-control" 
+                               th:field="*{colorPrincipal}" 
+                               id="colorPrincipal"
+                               style="height: 50px;">
+                    </div>
+
+                    <!-- Entrenador -->
+                    <div class="form-group">
+                        <label class="form-label" for="entrenador">Entrenador (@OneToOne)</label>
+                        <select class="form-select" 
+                                th:field="*{entrenador}" 
+                                id="entrenador">
+                            <option value="">Seleccione un entrenador</option>
+                            <option th:each="entrenador : ${entrenadores}" 
+                                    th:value="${entrenador.id}" 
+                                    th:text="${entrenador.nombre + ' ' + entrenador.apellido}">
+                            </option>
+                        </select>
+                    </div>
+
+                    <!-- Asociación -->
+                    <div class="form-group">
+                        <label class="form-label" for="asociacion">Asociación (@ManyToOne)</label>
+                        <select class="form-select" 
+                                th:field="*{asociacion}" 
+                                id="asociacion">
+                            <option value="">Seleccione una asociación</option>
+                            <option th:each="asociacion : ${asociaciones}" 
+                                    th:value="${asociacion.id}" 
+                                    th:text="${asociacion.nombre}">
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Botones -->
+                <div class="btn-group mt-3">
+                    <button type="submit" class="btn btn-success">💾 Guardar</button>
+                    <a th:href="@{/clubes}" class="btn btn-secondary">❌ Cancelar</a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Ayuda -->
+        <div class="card mt-3">
+            <div class="card-header">
+                <h3>ℹ️ Información sobre Relaciones</h3>
+            </div>
+            <div class="card-body">
+                <p><strong>Relación @OneToOne:</strong> Un club tiene un solo entrenador</p>
+                <p><strong>Relación @ManyToOne:</strong> Un club pertenece a una asociación</p>
+                <p><strong>Nota:</strong> Los jugadores (@OneToMany) y competiciones (@ManyToMany) se gestionan desde la vista de detalle del club</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2025 Dimayor | Desarrollado por Daniel Pérez | Sistema de Gestión Club de Fútbol</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Asociaciones</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="d-flex justify-between align-center">
+                <a th:href="@{/}" class="navbar-brand">⚽ Dimayor</a>
+                <div class="d-flex gap-2">
+                    <a th:href="@{/}" class="nav-link">Inicio</a>
+                    <a th:href="@{/clubes}" class="nav-link">Clubes</a>
+                    <a th:href="@{/jugadores}" class="nav-link">Jugadores</a>
+                    <a th:href="@{/entrenadores}" class="nav-link">Entrenadores</a>
+                    <a th:href="@{/asociaciones}" class="nav-link">Asociaciones</a>
+                    <a th:href="@{/competiciones}" class="nav-link">Competiciones</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+        <div class="page-header">
+            <div class="d-flex justify-between align-center">
+                <div>
+                    <h1>🏛️ Asociaciones Deportivas</h1>
+                    <p>Gestiona todas las asociaciones registradas</p>
+                </div>
+                <a th:href="@{/asociaciones/nuevo}" class="btn btn-success">+ Nueva Asociación</a>
+            </div>
+        </div>
+
+        <div class="table-container fade-in">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>País</th>
+                        <th>Presidente</th>
+                        <th>Año Fundación</th>
+                        <th>Sede</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:if="${asociaciones.empty}">
+                        <td colspan="7" class="text-center p-4">
+                            <p>No hay asociaciones registradas</p>
+                            <a th:href="@{/asociaciones/nuevo}" class="btn btn-primary mt-2">Registrar la primera asociación</a>
+                        </td>
+                    </tr>
+                    <tr th:each="asociacion : ${asociaciones}">
+                        <td th:text="${asociacion.id}">1</td>
+                        <td><strong th:text="${asociacion.nombre}">FCF</strong></td>
+                        <td th:text="${asociacion.pais}">Colombia</td>
+                        <td th:text="${asociacion.presidente}">Presidente</td>
+                        <td th:text="${asociacion.añoFundacion} ?: 'N/A'">1924</td>
+                        <td th:text="${asociacion.sede} ?: 'N/A'">Sede</td>
+                        <td>
+                            <div class="btn-group">
+                                <a th:href="@{/asociaciones/editar/{id}(id=${asociacion.id})}" class="btn btn-warning btn-sm">Editar</a>
+                                <a th:href="@{/asociaciones/eliminar/{id}(id=${asociacion.id})}" 
+                                   class="btn btn-danger btn-sm"
+                                   onclick="return confirm('¿Eliminar esta asociación?')">Eliminar</a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>© 2025 Dimayor | Desarrollado por Daniel Pérez</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${competicion.id != null ? 'Editar Competición' : 'Nueva Competición'}">Formulario</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="d-flex justify-between align-center">
+                <a th:href="@{/}" class="navbar-brand">⚽ Atlético Bucaramanga</a>
+                <div class="d-flex gap-2">
+                    <a th:href="@{/}" class="nav-link">Inicio</a>
+                    <a th:href="@{/clubes}" class="nav-link">Clubes</a>
+                    <a th:href="@{/jugadores}" class="nav-link">Jugadores</a>
+                    <a th:href="@{/entrenadores}" class="nav-link">Entrenadores</a>
+                    <a th:href="@{/asociaciones}" class="nav-link">Asociaciones</a>
+                    <a th:href="@{/competiciones}" class="nav-link">Competiciones</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1 th:text="${competicion.id != null ? '✏️ Editar Competición' : '➕ Nueva Competición'}">Formulario</h1>
+        </div>
+
+        <div class="card fade-in">
+            <form th:action="@{/competiciones/guardar}" th:object="${competicion}" method="post">
+                <input type="hidden" th:field="*{id}">
+                
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label class="form-label">Nombre *</label>
+                        <input type="text" class="form-control" th:field="*{nombre}" 
+                               th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid' : ''" 
+                               placeholder="Ej: Copa Libertadores" required>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Categoría</label>
+                        <select class="form-select" th:field="*{categoria}">
+                            <option value="">Seleccione...</option>
+                            <option value="Primera División">Primera División</option>
+                            <option value="Internacional">Internacional</option>
+                            <option value="Copa Nacional">Copa Nacional</option>
+                            <option value="Amistosos">Amistosos</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Fecha de Inicio *</label>
+                        <input type="date" class="form-control" th:field="*{fechaInicio}" 
+                               th:classappend="${#fields.hasErrors('fechaInicio')} ? 'is-invalid' : ''" required>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('fechaInicio')}" th:errors="*{fechaInicio}"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Fecha de Fin *</label>
+                        <input type="date" class="form-control" th:field="*{fechaFin}" 
+                               th:classappend="${#fields.hasErrors('fechaFin')} ? 'is-invalid' : ''" required>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('fechaFin')}" th:errors="*{fechaFin}"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Monto del Premio *</label>
+                        <input type="number" class="form-control" th:field="*{montoPremio}" 
+                               th:classappend="${#fields.hasErrors('montoPremio')} ? 'is-invalid' : ''"
+                               min="0" placeholder="Ej: 100000000" required>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('montoPremio')}" th:errors="*{montoPremio}"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Descripción</label>
+                        <textarea class="form-control" th:field="*{descripcion}" rows="3" 
+                                  placeholder="Breve descripción de la competición" style="resize: vertical;"></textarea>
+                    </div>
+                </div>
+
+                <div class="btn-group mt-3">
+                    <button type="submit" class="btn btn-success">💾 Guardar</button>
+                    <a th:href="@{/competiciones}" class="btn btn-secondary">❌ Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>© 2025 Atlético Bucaramanga | Desarrollado por Daniel Pérez</p>
+    </footer>
+</body>
+</html>
